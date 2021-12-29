@@ -59,6 +59,105 @@ def download_data(dataname,downloadir,jplpath=False):
             sys.exit()
     return
 
+def generate_header(ann):
+    """generate header from ann file"""
+
+    with open(ann,'r') as f:
+        lines = f.readlines()
+
+    print(lines)
+    # v1.ann
+    # find the following numbers
+    # Ground Range Data Latitude Lines               (-)             =  5895
+    # Ground Range Data Longitude Samples            (-)             =  12683
+    # Ground Range Data Starting Latitude            (deg)           =  33.02203044
+    # Ground Range Data Starting Longitude           (deg)           =  -115.75075932
+    # Ground Range Data Latitude Spacing             (deg)           =  -0.000055560
+    # Ground Range Data Longitude Spacing            (deg)           =  0.000055560
+    
+    # v2.ann
+    # Ground Range Data Latitude Lines               (-)             =  7779
+    # Ground Range Data Longitude Samples            (-)             =  14181
+    # Ground Range Data Starting Latitude            (deg)           =  47.43229428           ; center of upper left ground range pixel
+    # Ground Range Data Starting Longitude           (deg)           =  -122.17849572         ; center of upper left ground range pixel
+    # Ground Range Data Latitude Spacing             (deg)           =  -0.00005556
+    # Ground Range Data Longitude Spacing            (deg)           =  0.00005556
+
+    keystr = "Ground Range Data"
+
+    values=[]
+    for line in lines:    
+        if line[:len(keystr)] == keystr: 
+            print(line)
+            # for v2. get rid of ;
+            if ";" in line:
+                # pick up the first part
+                line = line.split(";")[0]
+            value = float(line.split("=")[1])
+            values.append(value)
+    print(ann)
+    print(values)
+    if len(values) != 6:
+        logging.error("generate header failed: {}".format(ann))
+        logging.error(values)
+        sys.exit()
+
+    height = int(values[0])
+    width  = int(values[1])
+    startlat = values[2]
+    startlon = values[3]
+    latspace = values[4]
+    lonspace = values[5]
+    
+    # reference: http://www.roipac.org/Viewing_results
+    # lower left (LL) corner :  Y_FIRST + (Y_STEP*YMAX)
+    # NCOLS 20521
+    # NROWS 6306
+    # XLLCORNER -116.08600836
+    # YLLCORNER 32.5814
+    # CELLSIZE 0.000055560
+    # NODATA_VALUE 0.0
+    # BYTEORDER LSBFIRST
+
+    hdr  = "NCOLS " + str(width) + "\n"
+    hdr += "NROWS "  + str(height) + "\n"
+    hdr += "XLLCORNER " + str(startlon) + "\n"
+    hdr += "YLLCORNER " + str(startlat + height * latspace) + "\n"
+    hdr += "CELLSIZE " + "%.9f" % abs(lonspace) + "\n"
+    # nodata value may be different 
+    #hdr += "NODATA_VALUE " + "0.0" + "\n"
+    hdr += "PIXELTYPE FLOAT" + "\n"
+    hdr += "BYTEORDER LSBFIRST" + "\n"
+    
+    # save hdr files 
+    image = ann[:-4]
+    
+    # ground files: int.grd, unw.grd, cor.grd,amp1.grd,amp2.grd,hgt.grd
+    #datafiles= ["los.grd", "unw.grd", "cor.grd","amp1.grd","amp2.grd","hgt.grd"]
+    datafiles= ["unw.grd", "hgt.grd"]
+    
+    for name in datafiles:
+        if name != "hgt.grd":
+            hdrfinal = hdr + "NODATA_VALUE " + "0.0" + "\n"
+        else:
+            hdrfinal = hdr + "NODATA_VALUE " + "-10000" + "\n"
+        hdrname = image + "." + name[:-4] + ".hdr"
+        with open (hdrname, "w") as f:
+            f.write(hdrfinal)
+            f.write('\n')
+
+    return
+
+
+def grd2tiff(dataname):
+    """convert grd file to geotiff"""
+   
+    # assume it is in the processing folder
+    
+    # generate header first
+    ann = dataname + ".ann"
+    generate_header(ann)
+    
 def processing_joblist(joblist,jpl=False,skipdownload=False):
     """ processing list of UAVSAR data"""
 
@@ -82,10 +181,7 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
     # uid,dataname,alaska
 
     with open(joblist,"r") as f:
-        lines = f.read()
-    f.close()
-
-    lines = lines.split()
+        lines = f.readlines()
     
     for entry in lines:
         if jpl:
@@ -103,11 +199,15 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
         os.chdir(download_dir)
         logging.info("processing {} - {}".format(uid,dataname))
 
+        # download data
         if not skipdownload:
             if jpl:
                 download_data(dataname,download_dir,jplpath = jplpath)
             else:
                 download_data(dataname,download_dir)
+        #convert 2 geotiff
+        grd2tiff(dataname)
+
         # switch back for safety
         os.chdir(settings.BASE_DIR)
 
