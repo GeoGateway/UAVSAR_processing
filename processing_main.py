@@ -25,6 +25,11 @@ import logging
 import subprocess
 import settings
 
+def create_path(apath):
+    """check a path, if not existing, then create one"""
+    if not os.path.exists(apath):
+        os.makedirs(apath, exist_ok=True)
+
 def download_data(dataname,downloadir,jplpath=False):
     """ download data from alaska"""
 
@@ -65,7 +70,6 @@ def generate_header(ann):
     with open(ann,'r') as f:
         lines = f.readlines()
 
-    print(lines)
     # v1.ann
     # find the following numbers
     # Ground Range Data Latitude Lines               (-)             =  5895
@@ -149,20 +153,67 @@ def generate_header(ann):
     return
 
 
-def grd2tiff(dataname):
+def grd2tiff(uid,dataname):
     """convert grd file to geotiff"""
    
     # assume it is in the processing folder
-    
+    # check outpout folder
+    output_dir = os.path.join(settings.PRODUCT_DIR,"uid_" + uid)
+    create_path(output_dir)
+
     # generate header first
     ann = dataname + ".ann"
     generate_header(ann)
+
+    # run geotiff coversion 
+    # for large file using compression
+    grds = ["unw.grd", "hgt.grd"]
+    compress_method = {"unw.grd":"PACKBITS","hgt.grd":"DEFLATE"}
+
+    for grd in grds:
+        grdsource = ".".join([dataname,grd])
+
+        try:
+            grdsize = os.path.getsize(grdsource)
+        except OSError:
+            logging.error("failed on getsize: {}".format(grdsource))
+
+        grdsize = grdsize / (1024.0*1024.0*1024.0) # in Gb
+        large_file_flag = False
+        if grdsize > 3.2:
+            large_file_flag = True
+
+        # tiff is uid1234_unw.tiff
+        outputtiff = "uid{}_{}.tiff".format(uid,grd[:-4])
+        if large_file_flag:
+            gdalcmd = "gdal_translate -a_srs EPSG:4326 -co TILED=YES -co COMPRESS={} -of GTiff {} {}".format(compress_method[grd], grdsource, outputtiff)
+        else:
+            gdalcmd = "gdal_translate -a_srs EPSG:4326 -co TILED=YES -of GTiff {} {}".format(grdsource, outputtiff)
+        
+        exitcode = subprocess.call(gdalcmd, shell=True)
+        if not exitcode == 0:
+            #something wrong with downloading
+            logging.error("tiff conversion failed: {}".format(grdsource))
+            sys.exit()
+        # run build overview
+        gdalcmd = "gdaladdo -r average {} 2 4 8 16 32".format(outputtiff)
+        exitcode = subprocess.call(gdalcmd, shell=True)
+
+        # mv generated tiffs to output_dir
+        # copy .hdr and .ann to targetuiddir
+        cmd = "mv {} {}".format(outputtiff, output_dir)
+        os.system(cmd)
+
+    # copy ann to outout_dir
+    cmd = "cp *.ann {}".format(output_dir)
+    os.system(cmd)
     
+    return
+
 def processing_joblist(joblist,jpl=False,skipdownload=False):
     """ processing list of UAVSAR data"""
 
     print(joblist)
-    print(jpl)
 
     if not os.path.exists(joblist):
         print("not found: ",joblist)
@@ -184,6 +235,7 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
         lines = f.readlines()
     
     for entry in lines:
+        entry = entry.strip()
         if jpl:
             # 366,SanAnd_05512_10058-002_10077-008_0112d_s01_L090HH_01,Release2e
             uid,dataname, jplpath = entry.split(",")
@@ -192,8 +244,7 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
         
         download_dir = os.path.join(settings.WORKING_DIR,"uid_" + str(uid))
 
-        if not os.path.exists(download_dir):
-            os.makedirs(download_dir, exist_ok=True)
+        create_path(download_dir)
         
         # switch download_dir for processing
         os.chdir(download_dir)
@@ -206,7 +257,7 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
             else:
                 download_data(dataname,download_dir)
         #convert 2 geotiff
-        grd2tiff(dataname)
+        grd2tiff(uid,dataname)
 
         # switch back for safety
         os.chdir(settings.BASE_DIR)
