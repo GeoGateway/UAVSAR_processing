@@ -48,7 +48,9 @@ def download_data(dataname,downloadir,jplpath=False):
             logging.info("skip: {}".format(downfile))
             continue
         aurl = os.path.join(baseurl,downfile)
-        wgetcmd = "wget {}".format(aurl)
+        # guide: https://urs.earthdata.nasa.gov/documentation/for_users/data_access/curl_and_wget
+        # wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies http://server/path
+        wgetcmd = "wget --load-cookie ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies {}".format(aurl)
         
         exitcode = subprocess.call(wgetcmd, shell=True)
         if not exitcode == 0:
