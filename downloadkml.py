@@ -2,9 +2,11 @@
 downloadkml.py
     -- download overview kml
     -- fix kml
+    -- generate thumbnail with int.png
 """
 import os
 import settings
+from PIL import Image
 
 from utilities import create_path
 
@@ -16,6 +18,98 @@ def cleanStrings(inStr, leftstr,rightstr):
         return False
 
     return inStr[a + len(leftstr):b]
+
+def getimagesize(image_file):
+    """ return image size """
+    
+    img = Image.open(image_file)
+    width,height = img.size
+    
+    return [width, height]
+
+def extractbbox(kml):
+    """ find boundingbox from a kml """
+    
+    with open(kml,"r") as f:
+        kmlstring = f.read()
+    
+    #<north>32.93182878</north>
+    #<south>32.87493534</south>
+    #<east>-116.0291427</east>
+    #<west>-116.08603614</west>
+    
+    north = cleanStrings(kmlstring, "<north>","</north>")
+    south = cleanStrings(kmlstring, "<south>","</south>")
+    east  = cleanStrings(kmlstring, "<east>","</east>")
+    west  = cleanStrings(kmlstring, "<west>","</west>")
+    
+    bbox = map(float,[west,east,north,south])
+
+    return bbox
+
+def generateworldfile(image_file,bbox,imagesize):
+    """ write the world file """
+    
+    # reference: http://en.wikipedia.org/wiki/World_file
+    # Line 1: A: pixel size in the x-direction in map units/pixel
+    # Line 2: D: rotation about y-axis
+    # Line 3: B: rotation about x-axis
+    # Line 4: E: pixel size in the y-direction in map units, almost always negative[3]
+    # Line 5: C: x-coordinate of the center of the upper left pixel
+    # Line 6: F: y-coordinate of the center of the upper left pixel
+    
+    # no rotation in our case
+    world_file = image_file[:-4] + ".pgw"
+    
+    [west,east,north,south] = bbox
+    [width, height] = imagesize
+    with open(world_file,'w') as f:
+        
+        xsize = (east - west) / width
+        ysize = (south - north) / height
+        xul = west
+        yul = north
+        
+        f.write("%.8f" % xsize + "\n")
+        f.write("0.0" + "\n")
+        f.write("0.0" + "\n")
+        f.write("%.8f" % ysize + "\n")
+        f.write("%.8f" % xul + "\n")
+        f.write("%.8f" % yul + "\n")
+        
+    return
+
+def generate_thumbnail(uid, dataname, itype):
+    """generate thumbnail"""
+
+    kml = "{}.{}.kml".format(dataname,itype)
+    png = "{}.{}.png".format(dataname,itype)
+
+    # generate pgw
+    bbox = extractbbox(kml)
+    imagesize = getimagesize(png)
+    generateworldfile(png, bbox, imagesize)
+
+    # convert to tiff
+    tiff = "uid" + uid + "_int.tiff"
+    # force it to be 8bit tiff
+    cmd = "gdal_translate -a_srs EPSG:4326 " + png + " " + tiff
+    os.system(cmd)
+
+    tiffc = "uid" + uid + "_int_t.tiff"
+    cmd = "gdal_translate -of GTiff -ot Byte -scale -a_srs EPSG:4326 " + tiff + " -outsize 50% 50% -co TILED=YES " + tiffc
+    os.system(cmd)
+    cmd = "gdaladdo -r average " + tiffc + " 2 4 8"
+    os.system(cmd)
+    
+    # remove and move
+    os.system("rm " + tiff)
+    os.system(cmd)
+
+    cmd = "mv " + tiffc + " " + settings.THUMBNAIL_DIR 
+    os.system(cmd)
+
+    return
 
 def overview_kml(uid, dataname):
     """download kml"""
@@ -63,6 +157,8 @@ def overview_kml(uid, dataname):
         #print placemark
         if placemark: 
             kstrnew = kstr.replace("<Placemark>"+placemark+"</Placemark>","")
+        else:
+            kstrnew = kstr
 
         # replace image url
         kstrnew = kstrnew.replace(pngurl, png)
@@ -77,9 +173,11 @@ def overview_kml(uid, dataname):
             screenoverlay_new = screenoverlay.replace(legendurl,legendpng)
             kstrnew = kstrnew.replace("<ScreenOverlay>"+screenoverlay+"</ScreenOverlay>","<ScreenOverlay>"+screenoverlay_new+"</ScreenOverlay>")
         
+        #write out the new kml
         with open(kmlfile,"w") as f:
             f.write(kstrnew)
 
+    generate_thumbnail(uid, dataname,"int")
 
 def main():
     """test kml function"""
