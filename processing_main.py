@@ -259,11 +259,12 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
                 download_data(dataname,download_dir,jplpath = jplpath)
             else:
                 download_data(dataname,download_dir)
+        
         #convert 2 geotiff
-        #grd2tiff(uid,dataname)
+        grd2tiff(uid,dataname)
 
         # processing overview kml
-        #overview_kml(uid,dataname)
+        overview_kml(uid,dataname)
 
         # copy ann file to ann folder
         newann = "uid{}@{}.ann".format(uid,dataname)
