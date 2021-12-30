@@ -57,7 +57,7 @@ def download_data(dataname,downloadir,jplpath=False):
         aurl = os.path.join(baseurl,downfile)
         # guide: https://urs.earthdata.nasa.gov/documentation/for_users/data_access/curl_and_wget
         # wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies http://server/path
-        wgetcmd = "wget --load-cookie ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies {}".format(aurl)
+        wgetcmd = "wget -nc --load-cookie ~/.urs_cookies --save-cookies ~/.urs_cookies --keep-session-cookies {}".format(aurl)
         
         exitcode = subprocess.call(wgetcmd, shell=True)
         if not exitcode == 0:
@@ -260,18 +260,23 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
             else:
                 download_data(dataname,download_dir)
         #convert 2 geotiff
-        grd2tiff(uid,dataname)
+        #grd2tiff(uid,dataname)
 
         # processing overview kml
-        overview_kml(uid,dataname)
+        #overview_kml(uid,dataname)
 
         # copy ann file to ann folder
-        cmd = "cp uid{}@{}.ann {}".fomrat(uid,dataname,settings.ANN_DIR)
+        newann = "uid{}@{}.ann".format(uid,dataname)
+        newann = os.path.join(settings.ANN_DIR,newann)
+        cmd = "cp {}.ann {}".format(dataname,newann)
         os.system(cmd)
+
         # copy unw.kmz to highres folder
-        cmd = "cp uid{}@{}.unw.kmz {}".fomrat(uid,dataname,settings.HIGHRES_DIR)
+        newkmz = "uid{}@{}.unw.kmz".format(uid,dataname)
+        newkmz = os.path.join(settings.HIGHRES_DIR,newkmz)
+        cmd = "cp {}.unw.kmz {}".format(dataname,newkmz)
         os.system(cmd)
-        
+
         # switch back for safety
         os.chdir(settings.BASE_DIR)
 
