@@ -18,4 +18,3 @@ THUMBNAIL_DIR = os.path.expanduser(config.get('general','THUMBNAIL_DIR'))
 ANN_DIR = os.path.expanduser(config.get('general','ANN_DIR'))
 HIGHRES_DIR = os.path.expanduser(config.get('general','HIGHRES_DIR'))
 LOG_DIR = os.path.expanduser(config.get('general','LOG_DIR')) 
-

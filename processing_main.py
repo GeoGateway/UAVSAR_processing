@@ -205,11 +205,12 @@ def grd2tiff(uid,dataname):
         # copy .hdr and .ann to targetuiddir
         cmd = "mv {} {}".format(outputtiff, output_dir)
         os.system(cmd)
+        logging.info("tiff created: {}".format(outputtiff))
 
     # copy ann to outout_dir
     cmd = "cp *.ann {}".format(output_dir)
     os.system(cmd)
-    
+
     return
 
 def processing_joblist(joblist,jpl=False,skipdownload=False):
@@ -264,6 +265,13 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
         # processing overview kml
         overview_kml(uid,dataname)
 
+        # copy ann file to ann folder
+        cmd = "cp uid{}@{}.ann {}".fomrat(uid,dataname,settings.ANN_DIR)
+        os.system(cmd)
+        # copy unw.kmz to highres folder
+        cmd = "cp uid{}@{}.unw.kmz {}".fomrat(uid,dataname,settings.HIGHRES_DIR)
+        os.system(cmd)
+        
         # switch back for safety
         os.chdir(settings.BASE_DIR)
 
