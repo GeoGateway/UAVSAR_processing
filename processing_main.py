@@ -30,6 +30,7 @@ import subprocess
 import settings
 
 from utilities import create_path
+from downloadkml import overview_kml
 
 def download_data(dataname,downloadir,jplpath=False):
     """ download data from alaska"""
@@ -259,6 +260,9 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
                 download_data(dataname,download_dir)
         #convert 2 geotiff
         grd2tiff(uid,dataname)
+
+        # processing overview kml
+        overview_kml(uid,dataname)
 
         # switch back for safety
         os.chdir(settings.BASE_DIR)
