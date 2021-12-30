@@ -10,6 +10,8 @@ import shutil
 import xml.etree.ElementTree as ET
 from PIL import Image
 
+import settings
+
 def cleanStrings(inStr, leftstr,rightstr):
   a = inStr.find(leftstr)
   b = inStr.find(rightstr)
@@ -33,7 +35,6 @@ def extractbbox(kml):
     
     with open(kml,"r") as f:
         kmlstring = f.read()
-    f.closed
     
     #<north>32.93182878</north>
     #<south>32.87493534</south>
@@ -113,7 +114,6 @@ def processing_kml(kmlfolder, outputfolder):
     newversion = True
     geotiff = os.path.basename(kmlfolder)+".tiff"
     geotiff_compressed = os.path.basename(kmlfolder)+"_compressed.tiff"
-
 
     kmls = glob.glob(kmlfolder + os.path.sep + "tile-*.kml")
     if not len(kmls) == 0:
@@ -203,34 +203,37 @@ def processing_kml(kmlfolder, outputfolder):
 
     return
 
-def convert_kmz(kmz,outputfolder):
-    """ convert kmz to tiff """
+def convert_kmz():
+    """ convert all kmz to tiff """
 
     # first unzip kmz file
     # uzip kmz -d dir
-    kmzfolder = kmz[:-4] 
-    cmd = "unzip " + kmz + " -d " + kmzfolder
-    #print cmd
-    os.system(cmd)
-    processing_kml(kmzfolder,outputfolder)
+    outputfolder = settings.HIGHRES_DIR
+    os.chdir(outputfolder)
+    kmzs = [x for x in os.listdir() if ".kmz" in x]
+    for kmz in kmzs:
+        kmzfolder = kmz[:-4] 
+        geotiff_compressed = os.path.basename(kmzfolder)+"_compressed.tiff"
+        # skip pocessed
+        if os.path.exists(geotiff_compressed):
+            continue
+        cmd = "unzip " + kmz + " -d " + kmzfolder
+        os.system(cmd)
+        processing_kml(kmzfolder,outputfolder)
 
-    # chdir then delete folder
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    # remove kmz folder
-    try:
-        shutil.rmtree(kmzfolder)
-    except OSError as e:
-        print("Error: %s - %s." % (e.filename, e.strerror))
+        # chdir then delete folder
+        os.chdir(outputfolder)
+        # remove kmz folder
+        try:
+            shutil.rmtree(kmzfolder)
+        except OSError as e:
+            print("Error: %s - %s." % (e.filename, e.strerror))
 
     return
 
 def main():
 
-    kmzs = ["uid1540@SanAnd_08503_12023-008_13095-013_0387d_s01_L090HH_01.unw.kmz",
-        "uid1541@SanAnd_08503_12130-002_13095-013_0196d_s01_L090HH_01.unw.kmz"]
-    outputfolder = "/home/cicuser/Downloads/coding"
-    for kmz in kmzs:
-        convert_kmz(kmz,outputfolder)
+    convert_kmz()
 
 
 if __name__ == "__main__":
