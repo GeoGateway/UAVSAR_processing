@@ -2,6 +2,10 @@
 processing_main.py
     -- the main script to processing a RPI product
     -- download and covert unw.grd and hgt.grd to geotiff
+    -- download overview kml
+    -- generate thumbnail.tiff
+    -- update metadata
+    -- generate alternative coloring 
 """
 
 prolog="""
@@ -25,10 +29,7 @@ import logging
 import subprocess
 import settings
 
-def create_path(apath):
-    """check a path, if not existing, then create one"""
-    if not os.path.exists(apath):
-        os.makedirs(apath, exist_ok=True)
+from utilities import create_path
 
 def download_data(dataname,downloadir,jplpath=False):
     """ download data from alaska"""
