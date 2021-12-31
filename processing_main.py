@@ -275,7 +275,7 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
         # copy unw.kmz to highres folder
         newkmz = "uid{}@{}.unw.kmz".format(uid,dataname)
         newkmz = os.path.join(settings.HIGHRES_DIR,newkmz)
-        cmd = "cp {}.unw.kmz {}".format(dataname,newkmz)
+        cmd = "mv {}.unw.kmz {}".format(dataname,newkmz)
         os.system(cmd)
 
         # switch back for safety
