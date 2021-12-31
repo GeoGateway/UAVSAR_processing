@@ -27,6 +27,8 @@ import sys
 import argparse
 import logging
 import subprocess
+import shutil
+
 import settings
 
 from utilities import create_path
@@ -261,23 +263,36 @@ def processing_joblist(joblist,jpl=False,skipdownload=False):
                 download_data(dataname,download_dir)
         
         #convert 2 geotiff
-        grd2tiff(uid,dataname)
+        #grd2tiff(uid,dataname)
 
         # processing overview kml
-        overview_kml(uid,dataname)
+        #overview_kml(uid,dataname)
 
         # copy ann file to ann folder
         newann = "uid{}@{}.ann".format(uid,dataname)
         newann = os.path.join(settings.ANN_DIR,newann)
         cmd = "cp {}.ann {}".format(dataname,newann)
-        os.system(cmd)
+        #os.system(cmd)
 
         # copy unw.kmz to highres folder
         newkmz = "uid{}@{}.unw.kmz".format(uid,dataname)
         newkmz = os.path.join(settings.HIGHRES_DIR,newkmz)
         cmd = "mv {}.unw.kmz {}".format(dataname,newkmz)
-        os.system(cmd)
+        #os.system(cmd)
 
+        # zip the folder
+        os.chdir(settings.WORKING_DIR)
+        zipped = "uid_{}.zip".format(uid)
+        zipcmd = "zip -r {} uid_{}/*".format(zipped,uid)
+        os.system(zipcmd)
+
+        # then delete the folder
+        pfolder = "uid_" + uid
+        try:
+            shutil.rmtree(pfolder)
+        except OSError as e:
+            print("Error: %s - %s." % (e.filename, e.strerror))
+        
         # switch back for safety
         os.chdir(settings.BASE_DIR)
 
