@@ -157,6 +157,22 @@ def colormapping(geotiffs, method="linear", colortheme="viridis"):
     vmax_disp = max(disp_1, disp_2)
     print(vmin_disp, vmax_disp)
 
+    # record vim/vmax
+    if not crossflag:
+        #uid1540_unw.tiff
+        imagename = os.path.basename(geotiffs[0])
+        imageuid = imagename.split("_")[0][3:]
+        v_dict = {}
+        v_dict['UID']=imageuid
+        v_dict['image'] = imagename
+        v_dict["vmin"] = vmin
+        v_dict["vmax"] = vmax
+        v_dict['vmin_displacement'] = vmin_disp
+        v_dict['vmax_displacement'] = vmax_disp
+        vjson = os.path.join(settings.COLOR_DIR,imagename.split(".")[0]+".json")
+        with open(vjson,"w") as outfile:
+            outfile.write(json.dumps(v_dict,indent=4))
+
     if crossflag:
         # write out meta data for cross image colormapping
         # shall use a class?
