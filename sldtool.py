@@ -112,7 +112,7 @@ def plotcolorbar(legendname, colortheme, vminmax, vminmax_disp):
     vmin_disp, vmax_disp = vminmax_disp
     tick_text = ["{:.2f}".format(vmin_disp),"{:.2f}".format(0.5*vmin_disp),0, "{:.2f}".format(0.5*vmax_disp),"{:.2f}".format(vmax_disp)]
     cb.ax.set_xticklabels(tick_text, fontsize=9)
-    plt.savefig(legendname + ".png", format="PNG", bbox_inches='tight',pad_inches = 0.05, aspect="auto", transparent=False)
+    plt.savefig(os.path.join(settings.COLOR_DIR,legendname + ".png"), format="PNG", bbox_inches='tight',pad_inches = 0.05, aspect="auto", transparent=False)
 
     # close fig to release memory
     plt.close(fig)
@@ -258,7 +258,7 @@ def colormapping(geotiffs, method="linear", colortheme="viridis"):
 
     sldheader = sldheader % (SLDname)
     colormapentry = '<ColorMapEntry quantity="%s" color="%s"/>'
-    with open(SLDname + ".sld", "w") as f:
+    with open(os.path.join(settings.COLOR_DIR,SLDname + ".sld"), "w") as f:
         f.write(sldheader + "\n")
         for entry in colorlist:
             value, color = entry
