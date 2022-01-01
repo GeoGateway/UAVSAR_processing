@@ -112,7 +112,7 @@ def plotcolorbar(legendname, colortheme, vminmax, vminmax_disp):
     vmin_disp, vmax_disp = vminmax_disp
     tick_text = ["{:.2f}".format(vmin_disp),"{:.2f}".format(0.5*vmin_disp),0, "{:.2f}".format(0.5*vmax_disp),"{:.2f}".format(vmax_disp)]
     cb.ax.set_xticklabels(tick_text, fontsize=9)
-    plt.savefig(os.path.join(settings.COLOR_DIR,legendname + ".png"), format="PNG", bbox_inches='tight',pad_inches = 0.05, aspect="auto", transparent=False)
+    plt.savefig(os.path.join(settings.COLOR_DIR,legendname + ".png"), format="PNG", bbox_inches='tight',pad_inches = 0.05, transparent=False)
 
     # close fig to release memory
     plt.close(fig)
