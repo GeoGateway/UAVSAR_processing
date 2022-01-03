@@ -7,7 +7,7 @@ processing_main.py -j job.csv
     
     -- download and covert unw.grd and hgt.grd to geotiff
     -- download overview kml (downloadkml.py)
-    -- generate thumbnail.tiff 
+    -- generate thumbnail.tiff (downloadkml.py)
     -- update metadata (metadata.py)
     -- generate alternative coloring (sldtool.py) 
 ```
