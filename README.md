@@ -10,6 +10,7 @@ processing_main.py -j job.csv
     -- generate thumbnail.tiff (downloadkml.py)
     -- update metadata (metadata.py)
     -- generate alternative coloring (sldtool.py) 
+    -- generate high-res geotiff (kmz2tiff.py)
 ```
 
 sample job csv:
@@ -17,7 +18,7 @@ sample job csv:
 1540,SanAnd_08503_12023-008_13095-013_0387d_s01_L090HH_01
 1541,SanAnd_08503_12130-002_13095-013_0196d_s01_L090HH_01
 ```
-folder structure is defined in uavsar_processing.cfg  
+folder structure is defined in uavsar_processing.cfg, the save the space, the download .grd files are zipped as uid_xxxx.zip after the processing.
 ```
 GeoGateway/
 ├── processing
@@ -35,4 +36,3 @@ GeoGateway/
 ```
 metadata is saved in geojson format: [1540_1541.geojson](sample/ann/1540_1541.geojson)
 
-```
