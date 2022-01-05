@@ -18,7 +18,7 @@ sample job csv:
 1540,SanAnd_08503_12023-008_13095-013_0387d_s01_L090HH_01
 1541,SanAnd_08503_12130-002_13095-013_0196d_s01_L090HH_01
 ```
-folder structure is defined in uavsar_processing.cfg, the save the space, the download .grd files are zipped as uid_xxxx.zip after the processing.
+folder structure is defined in uavsar_processing.cfg. to save the space, the download .grd files are zipped as uid_xxxx.zip after the processing.
 ```
 GeoGateway/
 ├── processing
