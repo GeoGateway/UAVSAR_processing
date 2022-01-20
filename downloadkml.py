@@ -122,7 +122,8 @@ def overview_kml(uid, dataname):
     baseurl = "http://uavsar.jpl.nasa.gov/kml/RPI/"
     
     # download kml
-    filelist = {"int":".int.kml","cor":".cor.kml","amp1":".amp1.kml","amp2":".amp2.kml","unw":".unw.kml","hgt":".hgt.kml"}
+    #filelist = {"int":".int.kml","cor":".cor.kml","amp1":".amp1.kml","amp2":".amp2.kml","unw":".unw.kml","hgt":".hgt.kml"}
+    filelist = {"int":".int.kml","unw":".unw.kml","hgt":".hgt.kml"}
     for filetype in filelist.keys():
         filename = dataname + filelist[filetype]
         if os.path.exists(filename):
