@@ -1,0 +1,12 @@
+[project]
+name = "uavsar-processing"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "bs4>=0.0.2",
+    "geopandas>=1.0.1",
+    "requests>=2.32.5",
+    "wget>=3.2",
+]
