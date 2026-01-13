@@ -1,0 +1,347 @@
+; UAVSAR RPI Metadata file for harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02
+; search for parameters/value rather than placement in file
+
+; Annotation file version (when an annotation file contains no annotation version field, assume the version number is 1)
+UAVSAR RPI Annotation File Version Number      (-)             = 2.2
+
+; Geographic location of data (non-unique)
+Site Description                               (&)             = Harvard Forest, MA
+
+; Comments
+Flight Plan Comments of Pass 1                 (&)             = N/A
+Flight Plan Comments of Pass 2                 (&)             = N/A
+Processing Comments                            (&)             = N/A
+
+; URL of JPL website for precision data
+URL                                            (&)             = http://uavsar.jpl.nasa.gov/cgi-bin/product.pl?jobName=harvrd_18501_09063-002_09063-004_0000d_s01_L090_02
+
+
+; List of Precision Data Files
+
+Slant Range Interferogram                      (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.int         ; File Size   185090400 bytes
+Slant Range Unwrapped Phase                    (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.unw         ; File Size    92545200 bytes
+Slant Range Correlation                        (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.cor         ; File Size    92545200 bytes
+Slant Range Amplitude of Pass 1                (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp1        ; File Size    92545200 bytes
+Slant Range Amplitude of Pass 2                (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp2        ; File Size    92545200 bytes
+          
+Ground Range Interferogram                     (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.int.grd     ; File Size   461881560 bytes
+Ground Range Unwrapped Phase                   (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.unw.grd     ; File Size   230940780 bytes
+Ground Range Correlation                       (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.cor.grd     ; File Size   230940780 bytes
+Ground Range Amplitude of Pass 1               (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp1.grd    ; File Size   230940780 bytes
+Ground Range Amplitude of Pass 2               (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp2.grd    ; File Size   230940780 bytes
+DEM Used in Ground Projection                  (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.hgt.grd     ; File Size   230940780 bytes
+
+KMZ of Ground Range Interferogram              (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.int.kmz     ; File Size    25522364 bytes
+KMZ of Ground Range Unwrapped Phase            (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.unw.kmz     ; File Size    16832597 bytes
+KMZ of Ground Range Correlation                (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.cor.kmz     ; File Size    27430728 bytes
+KMZ of Ground Range Amplitude of Pass 1        (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp1.kmz    ; File Size    28775618 bytes
+KMZ of Ground Range Amplitude of Pass 2        (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp2.kmz    ; File Size    28719817 bytes
+KMZ of DEM Used in Ground Projection           (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.hgt.kmz     ; File Size     9518493 bytes
+
+; Single Look Complex Data may be available upon request
+Single Look Complex Data of Pass 1             (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.T1.slc      ; File Size  6663729600 bytes
+Single Look Complex Data of Pass 2             (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.T2.slc      ; File Size  6663808800 bytes
+
+
+; ------------------------------------------------------------------------------
+; Slant Range Multi-Looked Product Information
+; ------------------------------------------------------------------------------
+; Projection of image is relative to the flightline
+; Applicable Files: int, unw, cor, amp1, amp2
+
+Slant Range Data Azimuth Lines                 (-)             = 7011
+Slant Range Data Range Samples                 (-)             = 3300
+Slant Range Data Starting Azimuth              (m)             = -28260.3               ; center of upper left slant range pixel, value indicates offset from peg
+Slant Range Data at Near Range                 (m)             = 12851.22671366         ; center of upper left slant range pixel, value indicates offset from peg
+Slant Range Data Azimuth Spacing               (m)             = 7.2
+Slant Range Data Range Spacing                 (m)             = 4.99654098
+Number of Looks in Range                       (-)             = 3
+Number of Looks in Azimuth                     (-)             = 12
+
+; ------------------------------------------------------------------------------
+; Ground Range Multi-Looked Product Information 
+; ------------------------------------------------------------------------------
+; Slant range multi-looked products projected to the ground
+; Applicable Files: int.grd, unw.grd, cor.grd, amp1.grd, amp2.grd, hgt.grd
+
+Ground Range Data Latitude Lines               (-)             = 9485
+Ground Range Data Longitude Samples            (-)             = 6087
+Ground Range Data Starting Latitude            (deg)           = 42.760087200000001     ; center of upper left ground range pixel
+Ground Range Data Starting Longitude           (deg)           = -72.274503719999998    ; center of upper left ground range pixel
+Ground Range Data Latitude Spacing             (deg)           = -0.0000555600000000
+Ground Range Data Longitude Spacing            (deg)           = 0.0000555600000000
+Approximate Upper Left Latitude                (deg)           = 42.72978531            ; approximate corners of non-zero image footprint
+Approximate Upper Left Longitude               (deg)           = -72.21210206           ; approximate corners of non-zero image footprint
+Approximate Upper Right Latitude               (deg)           = 42.71578868            ; approximate corners of non-zero image footprint
+Approximate Upper Right Longitude              (deg)           = -71.93754640           ; approximate corners of non-zero image footprint
+Approximate Lower Left Latitude                (deg)           = 42.27737700            ; approximate corners of non-zero image footprint
+Approximate Lower Left Longitude               (deg)           = -72.27236483           ; approximate corners of non-zero image footprint
+Approximate Lower Right Latitude               (deg)           = 42.26327087            ; approximate corners of non-zero image footprint
+Approximate Lower Right Longitude              (deg)           = -71.99357245           ; approximate corners of non-zero image footprint
+
+; ------------------------------------------------------------------------------
+; Slant Range Single Look Complex Product Information (data available upon request)
+; ------------------------------------------------------------------------------
+; Projection of image is relative to the flightline
+; Applicable Files: *.slc
+Single Look Complex Data Azimuth Lines         (-)             = 84138
+Single Look Complex Data Range Samples         (-)             = 9900
+Single Look Complex Data Starting Azimuth      (m)             = -28263.6              ; center of upper left single look complex data pixel, value indicates offset from peg
+Single Look Complex Data at Near Range         (m)             = 12849.5612            ; center of upper left single look complex data pixel, value indicates offset from peg
+Single Look Complex Data Azimuth Spacing       (m)             = 0.6
+Single Look Complex Data Range Spacing         (m)             = 1.66551366
+
+; ------------------------------------------------------------------------------
+; Data Format Information
+; ------------------------------------------------------------------------------
+
+Interferogram Bytes Per Pixel                  (bytes)         = 8
+Unwrapped Phase Bytes Per Pixel                (bytes)         = 4
+Correlation Bytes Per Pixel                    (bytes)         = 4
+Amplitude Bytes Per Pixel                      (bytes)         = 4
+DEM Bytes Per Pixel                            (bytes)         = 4
+SLC Bytes Per Pixel                            (bytes)         = 8
+
+Interferogram Pixel Format                     (&)             = Complex
+Unwrapped Phase Pixel Format                   (&)             = Real
+Correlation Pixel Format                       (&)             = Real
+Amplitude Pixel Format                         (&)             = Real
+DEM Pixel Format                               (&)             = Real
+SLC Pixel Format                               (&)             = Complex
+
+Interferogram Units                            (&)             = Linear Power and Phase in Radians
+Unwrapped Phase Units                          (&)             = Radians
+Correlation Units                              (&)             = Scalar Between 0 and 1
+Amplitude Units                                (&)             = Linear Amplitude
+DEM Units                                      (&)             = Meters
+SLC Units                                      (&)             = Linear Amplitude and Phase in Radians
+
+
+; ------------------------------------------------------------------------------
+; Acquisition Parameters
+; ------------------------------------------------------------------------------
+
+Acquisition Mode                               (&)             = PolSAR
+
+Radar Look Direction                           (&)             = Left
+Flight Path                                    (&)             = Geodesic
+Number of Repeat Passes                        (-)             = 2
+Steering Angle                                 (deg)           = 90                    ; 90 deg is boresight
+Average Look Angle in Near Range               (deg)           = 17.58
+Average Look Angle in Far Range                (deg)           = 65.32
+
+Bandwidth                                      (Mhz)           = 80.00000000000000
+Center Wavelength                              (cm)            = 23.8403545
+Pulse Length                                   (microsec)      = 40.00000
+Ping-Pong or Single Antenna Transmit           (&)             = Ping-Pong
+
+Nominal Azimuth Reference Length               (-)             = 8192
+Average Pulse Repetition Interval              (ms)            = 2.40588645
+
+Global Average Yaw                             (deg)           = -0.565609319
+Global Average Pitch                           (deg)           = 2.10159337
+Global Average Roll                            (deg)           = 0.0
+Global Average ESA                             (deg)           = -0.838956264          ; electronic steering angle 
+Global Average Squint Angle                    (deg)           = -0.2472689
+Global Average Altitude                        (m)             = 12495.6855            ; GPS altitude
+Global Average Terrain Height                  (m)             = 246.308987            ;
+Standard Deviation of Terrain Height           (m)             = 36.9171568
+Barometric Pressure during Pass 1              (hPa)           = N/A      
+Barometric Pressure during Pass 2              (hPa)           = N/A      
+
+Flight ID for Pass 1                           (&)             = 09063
+Flight ID for Pass 2                           (&)             = 09063
+Start Time of Acquisition for Pass 1           (&)             = 16-Aug-2009 13:38:52 UTC
+Stop Time of Acquisition for Pass 1            (&)             = 16-Aug-2009 13:42:34 UTC
+Start Time of Acquisition for Pass 2           (&)             = 16-Aug-2009 14:10:06 UTC
+Stop Time of Acquisition for Pass 2            (&)             = 16-Aug-2009 14:13:53 UTC
+Hardware Version Number for Pass 1             (&)             = N/A   
+Hardware Version Number for Pass 2             (&)             = N/A   
+
+
+
+; ------------------------------------------------------------------------------
+; Processing Parameters
+; ------------------------------------------------------------------------------
+
+Processing Mode                                (&)             = RPI
+Polarization                                   (&)             = HH
+
+; Peg position is the nadir position of aircraft at the middle of the pass
+Peg Latitude                                   (deg)           = 42.481497055
+Peg Longitude                                  (deg)           = -72.292057516
+Peg Heading                                    (deg)           = -175.02228843
+Ellipsoid Semi-major Axis                      (m)             = 6378137.0
+Ellipsoid Eccentricity Squared                 (-)             = 0.00669437999
+Cross Track Offset From Reference Track        (m)             = 0.0
+
+Polarimetrically Calibrated                    (&)             = Yes
+Antenna Pattern Radiometric Correction Applied (&)             = Yes
+Range Dependent Radiometric Correction Applied (&)             = Yes
+Mocomp I Applied                               (&)             = Yes
+Mocomp II Applied                              (&)             = Yes
+Reskew Doppler                                 (&)             = Global Doppler
+Reskew Doppler Near Mid Far                    (hz,hz,hz)      = 32.79811957          -2.51036782         -15.53146832
+RFI Removed                                    (&)             = Yes (Quick RFI Removal)
+Cross Talk Removed                             (&)             = No
+Correlation Threshold                          (&)             = N/A
+
+Residual Baseline Estimation Method            (&)             = Phase v3              ; ampcor, Ampcor v1, Phase, Phase v2
+Number of Baseline Iterations                  (-)             = 1
+
+Length of Processed Data                       (km)            = 50.4792
+Date of Processing                             (&)             = 07-Feb-2018
+Processor Version Number                       (&)             = 1e419b15201e3e7ad1eb5d41acddfc9e464b79e2
+Post Processor Version Number                  (&)             = 1e419b15201e3e7ad1eb5d41acddfc9e464b79e2
+
+Ground Projection Method                       (&)             = Nearest Neighbor
+DEM Used in Processing                         (&)             = SRTM1 v3
+DEM Source                                     (&)             = http://uavsar.jpl.nasa.gov/doc/dem.htm
+DEM Datum                                      (&)             = WGS-84
+DEM Interpolation Method                       (&)             = Bilinear
+DEM Original Pixel Spacing                     (arcsec)        = 1
+DEM Citation Count                             (-)             = 0
+Slope Calibration in Ground Data               (&)             = No
+
+Phase Unwrapping Method                        (&)             = ICU                   ; ICU or SNAPHU
+Phase Unwrapping Filtering Method              (&)             = Low Pass              ; Low Pass or Power Spectrum
+Phase Unwrapping Filter Window Size            (&)             = 3 x 3                 ; Range x Azimuth in units of slant range pixels
+
+
+; ------------------------------------------------------------------------------
+; display parameters (mdx header)
+; ------------------------------------------------------------------------------
+; slt applies to slant range correlation and amplitude files
+; slt_mag and slt_phs applies to slant range interferogram
+; grd applies to ground range correlation, amplitude, height files
+; grd_mag and grd_phs applies to ground range interferogram
+;
+; mdx commands to display binary RPI data:
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.int      -set slt_phs -cmap cmy -wrap  6.28 -addr -3.14
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.unw      -set slt     -cmap cmy -wrap 12.56 -addr -6.28
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.cor      -set slt     -cmap cmy -wrap 1.05 -min 1e-9 -max 1.0 
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp1     -set slt     -PER -percent 95 -exp .5
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp2     -set slt     -PER -percent 95 -exp .5
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.int.grd  -set grd_phs -cmap cmy -wrap  6.28 -addr -3.14
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.unw.grd  -set grd     -cmap cmy -wrap 12.56 -addr -6.28
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.cor.grd  -set grd     -cmap cmy -wrap 1.05 -min 1e-9 -max 1.0 
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp1.grd -set grd     -PER -percent 95 -exp .5 
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.amp2.grd -set grd     -PER -percent 95 -exp .5 
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.hgt.grd  -set grd     -cmap cmy -wrap 250  -min -1000
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.T1.slc   -set slc_mag -PER -percent 95 -exp .5 harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.T1.slc -set slc_phs -cmap cmy -wrap 6.28 -addr -3.14
+; mdx -h harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.ann harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.T2.slc   -set slc_mag -PER -percent 95 -exp .5 harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.T2.slc -set slc_phs -cmap cmy -wrap 6.28 -addr -3.14
+
+set_name                                       (&)             =                        ; layers described
+
+; peg point
+set_plat                                       (deg)           = 42.481497055           ; peg latitude
+set_plon                                       (deg)           = -72.292057516          ; peg longitude
+set_phdg                                       (deg)           = -175.02228843          ; peg heading (north = 0 deg)
+
+; data file dimensions
+slt.set_rows                                   (pixels)        = 7011                   ; slant range data lines
+slt.set_cols                                   (pixels)        = 3300                   ; slant range data samples
+slt_mag.set_rows                               (pixels)        = 7011                   ; slant range data lines  
+slt_mag.set_cols                               (pixels)        = 3300                   ; slant range data samples
+slt_phs.set_rows                               (pixels)        = 7011                   ; slant range data lines  
+slt_phs.set_cols                               (pixels)        = 3300                   ; slant range data samples
+grd.set_rows                                   (pixels)        = 9485                   ; ground range data lines  
+grd.set_cols                                   (pixels)        = 6087                   ; ground range data samples
+grd_mag.set_rows                               (pixels)        = 9485                   ; ground range data lines  
+grd_mag.set_cols                               (pixels)        = 6087                   ; ground range data samples
+grd_phs.set_rows                               (pixels)        = 9485                   ; ground range data lines  
+grd_phs.set_cols                               (pixels)        = 6087                   ; ground range data samples
+slc_mag.set_rows                               (pixels)        = 84138                 ; single look complex data lines  
+slc_mag.set_cols                               (pixels)        = 9900                  ; single look complex data samples
+slc_phs.set_rows                               (pixels)        = 84138                 ; single look complex data lines  
+slc_phs.set_cols                               (pixels)        = 9900                  ; single look complex data samples
+
+; center of first pixel
+slt.row_addr                                   (m)             = -28260.3              ; center of upper left slant range pixel
+slt.col_addr                                   (m)             = 12851.22671366        ; center of upper left slant range pixel
+slt_mag.row_addr                               (m)             = -28260.3              ; center of upper left slant range pixel
+slt_mag.col_addr                               (m)             = 12851.22671366        ; center of upper left slant range pixel
+slt_phs.row_addr                               (m)             = -28260.3              ; center of upper left slant range pixel
+slt_phs.col_addr                               (m)             = 12851.22671366        ; center of upper left slant range pixel
+grd.row_addr                                   (deg)           = 42.760087200000001    ; center of upper left ground range pixel
+grd.col_addr                                   (deg)           = -72.274503719999998   ; center of upper left ground range pixel
+grd_mag.row_addr                               (deg)           = 42.760087200000001    ; center of upper left ground range pixel
+grd_mag.col_addr                               (deg)           = -72.274503719999998   ; center of upper left ground range pixel
+grd_phs.row_addr                               (deg)           = 42.760087200000001    ; center of upper left ground range pixel
+grd_phs.col_addr                               (deg)           = -72.274503719999998   ; center of upper left ground range pixel
+slc_mag.row_addr                               (m)             = -28263.6              ; center of upper left single look complex pixel
+slc_mag.col_addr                               (m)             = 12849.5612            ; center of upper left single look complex pixel
+slc_phs.row_addr                               (m)             = -28263.6              ; center of upper left single look complex pixel
+slc_phs.col_addr                               (m)             = 12849.5612            ; center of upper left single look complex pixel
+
+; pixel spacing
+slt.row_mult                                   (m/pixel)       = 7.2                   ; slant range azimuth post spacing
+slt.col_mult                                   (m/pixel)       = 4.99654098            ; slant range range post spacing
+slt_mag.row_mult                               (m/pixel)       = 7.2                   ; slant range azimuth post spacing
+slt_mag.col_mult                               (m/pixel)       = 4.99654098            ; slant range range post spacing
+slt_phs.row_mult                               (m/pixel)       = 7.2                   ; slant range azimuth post spacing
+slt_phs.col_mult                               (m/pixel)       = 4.99654098            ; slant range range post spacing
+grd.row_mult                                   (deg/pixel)     = -0.0000555600000000   ; ground range latitude spacing
+grd.col_mult                                   (deg/pixel)     = 0.0000555600000000    ; ground range longitdue spacing
+grd_mag.row_mult                               (deg/pixel)     = -0.0000555600000000   ; ground range latitude spacing
+grd_mag.col_mult                               (deg/pixel)     = 0.0000555600000000    ; ground range longitude spacing
+grd_phs.row_mult                               (deg/pixel)     = -0.0000555600000000   ; ground range latitude spacing
+grd_phs.col_mult                               (deg/pixel)     = 0.0000555600000000    ; ground range longitude spacing
+slc_mag.row_mult                               (m/pixel)       = 0.6                   ; single look complex data azimuth post spacing
+slc_mag.col_mult                               (m/pixel)       = 1.66551366            ; single look complex data range post spacing
+slc_phs.row_mult                               (m/pixel)       = 0.6                   ; single look complex data azimuth post spacing
+slc_phs.col_mult                               (m/pixel)       = 1.66551366            ; single look complex data range post spacing
+
+; bytes per pixel
+slt.val_size                                   (bytes)         = 4                     ; bytes per pixel in file
+slt_mag.val_size                               (bytes)         = 8                     ; bytes per pixel in file
+slt_phs.val_size                               (bytes)         = 8                     ; bytes per pixel in file
+grd.val_size                                   (bytes)         = 4                     ; bytes per pixel in file
+grd_mag.val_size                               (bytes)         = 8                     ; bytes per pixel in file
+grd_phs.val_size                               (bytes)         = 8                     ; bytes per pixel in file
+slc_mag.val_size                               (bytes)         = 8                     ; bytes per pixel in file
+slc_phs.val_size                               (bytes)         = 8                     ; bytes per pixel in file
+val_endi                                       (&)             = LITTLE ENDIAN         ; byte order
+
+slt.val_frmt                                   (&)             = REAL*4                ; slant range data type
+slt_mag.val_frmt                               (&)             = COMPLEX_MAGNITUDE     ; slant range data type
+slt_phs.val_frmt                               (&)             = COMPLEX_PHASE         ; slant range data type
+grd.val_frmt                                   (&)             = REAL*4                ; ground range data type
+grd_mag.val_frmt                               (&)             = COMPLEX_MAGNITUDE     ; ground range data type
+grd_phs.val_frmt                               (&)             = COMPLEX_PHASE         ; ground range data type
+slc_mag.val_frmt                               (&)             = COMPLEX_MAGNITUDE     ; single look complex data type
+slc_phs.val_frmt                               (&)             = COMPLEX_PHASE         ; single look complex data type
+
+; projection
+slt.set_proj                                   (&)             = SCX                   ; slant range 
+slt_mag.set_proj                               (&)             = SCX                   ; slant range 
+slt_phs.set_proj                               (&)             = SCX                   ; slant range 
+grd.set_proj                                   (&)             = EQA                   ; equiangular projection
+grd_mag.set_proj                               (&)             = EQA                   ; equiangular projection
+grd_phs.set_proj                               (&)             = EQA                   ; equiangular projection
+slc_mag.set_proj                               (&)             = SCX                   ; slant range 
+slc_phs.set_proj                               (&)             = SCX                   ; slant range 
+
+; display thresholds and color table
+val_mult                                       (-)             = 1.0                   ; scale for data
+val_addr                                       (-)             = 0.0                   ; shift for data
+val_minv                                       (dB)            = -1000000.             ; minimum value default for display
+val_maxv                                       (dB)            = 10000000.             ; maximum value default for display
+slt_phs.val_mult                               (-)             = 1.0                   ; maximum value default for display
+slt_phs.val_minv                               (rad)           = -3.14                 ; maximum value default for display
+slt_phs.val_maxv                               (rad)           = 3.14                  ; maximum value default for display
+grd_phs.val_mult                               (-)             = 1.0                   ; maximum value default for display
+grd_phs.val_minv                               (rad)           = -3.14                 ; maximum value default for display
+grd_phs.val_maxv                               (rad)           = 3.14                  ; maximum value default for display
+slc_phs.val_mult                               (-)             = 1.0                   ; maximum value default for display
+slc_phs.val_minv                               (rad)           = -3.14                 ; maximum value default for display
+slc_phs.val_maxv                               (rad)           = 3.14                  ; maximum value default for display
+dsp_cmap                                       (&)             = grey                  ; default grey color table
+slt_phs.dsp_cmap                               (&)             = cmy                   ; color table for interferogram phase
+grd_phs.dsp_cmap                               (&)             = cmy                   ; color table for interferogram phase
+slc_phs.dsp_cmap                               (&)             = cmy                   ; color table for interferogram phase
+
+; header/tail information
+set_hddr                                       (bytes)         = 0                     ; header bytes in raw data
+set_tail                                       (bytes)         = 0                     ; tail bytes in raw data
+
