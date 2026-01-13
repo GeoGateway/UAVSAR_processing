@@ -246,8 +246,7 @@ def debug():
     v = extract_meta(ann)
     print(v)
 
-
-def main():
+def process_annfolder(annfolder):
     """scan a whole folder"""
 
     annfolder = "ann"
@@ -270,6 +269,16 @@ def main():
     gdf.to_file(f"anns_{anncount}.geojson", driver="GeoJSON")
 
 
+def main():
+    annfolder = sys.argv[1]
+    if annfolder is None:
+        print("Usage: anntool.py annfolder -- the folder containing ann files")
+        print("Usage: anntool.py debug -- run debug function")
+        sys.exit(1)
+    if annfolder == "debug":
+        debug()
+    else:
+        process_annfolder(annfolder)
+
 if __name__ == "__main__":
-    # debug()
     main()
