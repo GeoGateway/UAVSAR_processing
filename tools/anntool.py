@@ -64,14 +64,42 @@ def get_geomfromann(vdict, version):
         # Image Corner 3 Longitude
         # Image Corner 4 Latitude  -> lower right
         # Image Corner 4 Longitude
-        lat0 = float(vdict["Image Corner 1 Latitude"])
-        lon0 = float(vdict["Image Corner 1 Longitude"])
-        lat1 = float(vdict["Image Corner 2 Latitude"])
-        lon1 = float(vdict["Image Corner 2 Longitude"])
-        lat2 = float(vdict["Image Corner 4 Latitude"])
-        lon2 = float(vdict["Image Corner 4 Longitude"])
-        lat3 = float(vdict["Image Corner 3 Latitude"])
-        lon3 = float(vdict["Image Corner 3 Longitude"])
+        try:
+            lat0 = float(vdict["Image Corner 1 Latitude"])
+            lon0 = float(vdict["Image Corner 1 Longitude"])
+            lat1 = float(vdict["Image Corner 2 Latitude"])
+            lon1 = float(vdict["Image Corner 2 Longitude"])
+            lat2 = float(vdict["Image Corner 4 Latitude"])
+            lon2 = float(vdict["Image Corner 4 Longitude"])
+            lat3 = float(vdict["Image Corner 3 Latitude"])
+            lon3 = float(vdict["Image Corner 3 Longitude"])
+        except ValueError:
+            print("Error: cannot get corner coordinates from ann file")
+            # center of upper left ground range pixel
+            # Ground Range Data Latitude Lines               (-)             =  10988
+            # Ground Range Data Longitude Samples            (-)             =  13680
+            # Ground Range Data Starting Latitude            (deg)           =  37.48610976
+            # Ground Range Data Starting Longitude           (deg)           =  -121.92469764
+            # Ground Range Data Latitude Spacing             (deg)           =  -0.000055560
+            # Ground Range Data Longitude Spacing            (deg)           =  0.000055560
+            lines = int(vdict["Ground Range Data Latitude Lines"])
+            samples = int(vdict["Ground Range Data Longitude Samples"])
+            startlat = float(vdict["Ground Range Data Starting Latitude"])
+            startlon = float(vdict["Ground Range Data Starting Longitude"])
+            latspace = float(vdict["Ground Range Data Latitude Spacing"])
+            lonspace = float(vdict["Ground Range Data Longitude Spacing"])
+            # upper left
+            lat0 = startlat
+            lon0 = startlon
+            # upper right
+            lat1 = startlat
+            lon1 = startlon + (samples - 1) * lonspace
+            # lower right
+            lat2 = startlat + (lines - 1) * latspace
+            lon2 = startlon + (samples - 1) * lonspace
+            # lower left
+            lat3 = startlat + (lines - 1) * latspace
+            lon3 = startlon
 
     if version >= 2:
         # suppose it is version 2
@@ -204,7 +232,7 @@ def extract_meta(annfile):
     if version >= 2:
         geom = get_geomfromann(vdict, version)
     else:
-        geom = ""
+        geom = get_geomfromann(vdict, version)
 
     # dataname,description,lines,samples,startlat,startlon,latspace,lonspace,wavelength,gpsaltitude,terrainheight,peglat,peglon,peghead,radardirection,time1,time2,phasesign,version,url,geom
     meta = {}
@@ -253,9 +281,20 @@ def process_annfolder(annfolder):
     annlist = [x for x in os.listdir(annfolder) if x[-4:] == ".ann"]
     anncount = len(annlist)
     metalist = []
+    v1count = 0
+    v2count = 0
     for annfile in annlist:
         meta_dict = extract_meta(annfolder + os.path.sep + annfile)
         metalist.append(meta_dict)
+        version = meta_dict["version"]
+        if version == 1:
+            v1count += 1
+        elif version >= 2:
+            v2count += 1
+
+    print(f"Total ann files: {anncount}")
+    print(f"Version 1 ann files: {v1count}")
+    print(f"Version 2 ann files: {v2count}")
 
     df = pd.DataFrame(metalist)
     # df['geom'] = df['geom'].apply(wkt.loads)
@@ -265,7 +304,7 @@ def process_annfolder(annfolder):
     # df.to_csv('anns.csv')
     gdf = gpd.GeoDataFrame(df, geometry="geometry")
     gdf.crs = "epsg:4326"
-    print(gdf.head())
+    #print(gdf.head())
     gdf.to_file(f"anns_{anncount}.geojson", driver="GeoJSON")
 
 
