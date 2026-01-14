@@ -3,7 +3,7 @@
 # v1, v2
 #
 
-import os, sys
+import os, sys, re
 from daynum2k import daynum2k
 import pandas as pd
 import geopandas as gpd
@@ -150,6 +150,47 @@ def get_geomfromann(vdict, version):
 
     return geom
 
+def generate_uavsar_uid(properties):
+    """
+    Generates a structured UID based on UAVSAR metadata properties.
+    Scheme: SITE-PROJECT-LINE-BASELINE-POL-VER-UNW
+    """
+    # Extract core fields
+    dataname = properties.get("dataname", 0)
+    version = str(properties.get("version", 0))
+    unw_status = properties.get("unw", 0)
+
+    # Example dataname: "silver_34715_20011-001_20016-002_0019d_s01_L090HH_01"
+    # Split by underscores to get components
+    parts = dataname.split('_')
+
+    if len(parts) < 7:
+        return "INVALID_DATANAME"
+
+    # 1. Site: First 4 letters of the site name (uppercase)
+    site = parts[0][:4].upper()
+
+    # 2. Project ID: Second segment
+    project = parts[1]
+
+    # 3. Flight Line: Third segment (removing the -xxx sub-segment)
+    line = parts[2].split('-')[0]
+
+    # 4. Baseline: Fifth segment (removing the 'd' for days)
+    baseline = parts[4].replace('d', '')
+
+    # 5. Polarization: Extracted from the LxxxPP segment (e.g., L090HH)
+    # Uses regex to find the two capital letters at the end of that part
+    pol_match = re.search(r'([A-Z]{2})', parts[7])
+    polarization = pol_match.group(1) if pol_match else "XX"
+
+    # 6. UNW Status Suffix
+    unw_suffix = "U" if unw_status == 1 else "W"
+
+    # Combine into final UID
+    uid = f"{site}-{project}-{line}-{baseline}-{polarization}-{version}-{unw_suffix}"
+
+    return uid
 
 def extract_meta(annfile):
     """extract meta data from an ann file"""
@@ -273,6 +314,14 @@ def extract_meta(annfile):
     meta["unw"] = unw
     meta["geom"] = geom
 
+    #generate uid
+    sample_properties = {
+        "dataname": dataname,
+        "version": version,
+        "unw": unw
+    }
+    new_uid = generate_uavsar_uid(sample_properties)
+    meta["uid"] = new_uid
     return meta
 
 
