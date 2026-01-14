@@ -40,7 +40,25 @@ def ann2dict(ann):
                 b = key.find(")")
                 key = key.replace(key[a : b + 1], "")
             key = key.strip()
-            # for value part, need to get rid of in v2;
+
+            if key == "Ground Range Unwrapped Phase":
+                # Ground Range Unwrapped Phase                   (&)             = SanAnd_23513_17112-004_18072-007_0352d_s01_L090HH_02.unw.grd     ; File Size           0 bytes
+                # Ground Range Unwrapped Phase                   (&)             = harvrd_18501_09063-002_09063-004_0000d_s01_L090HH_02.unw.grd     ; File Size   230940780 bytes
+                # Ground Range Unwrapped Phase                   (&)             =  N/A
+                if (
+                    "N/A" in value
+                    or len(value) <= 10
+                ): unw = 0
+                if "File Size" in value:
+                    unwstr = value.split("File Size")[1]
+                    unwstr = unwstr.replace("bytes", "").strip()
+                    unwsize = int(unwstr)
+                    if unwsize > 0:
+                        unw = 1
+                    else:
+                        unw = 0
+                V["unw"] = unw
+
             if ";" in value:
                 value = value.split(";")[0]
             value = value.strip()
@@ -147,13 +165,9 @@ def extract_meta(annfile):
         version = 1
 
     # Ground Range Unwrapped Phase
-    if (
-        vdict["Ground Range Unwrapped Phase"] == "N/A"
-        or len(vdict["Ground Range Unwrapped Phase"]) <= 10
-    ):
-        unw = 0
-    else:
-        unw = 1
+    # unw = 0 -> no unwrapped phase
+    # unw = 1 -> has unwrapped phase
+    unw = vdict.get("unw", 0)
 
     # determine phase sign based on aquisition time order
     if version == 1:
