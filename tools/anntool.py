@@ -154,6 +154,8 @@ def generate_uavsar_uid(properties):
     """
     Generates a structured UID based on UAVSAR metadata properties.
     Scheme: SITE-PROJECT-LINE-BASELINE-POL-VER-UNW
+    Input Data: silver_34715_20011-001_20016-002_0019d_s01_L090HH_01 with unw: 1 and version: 2.3
+    Resulting UID: SILV-34715-20011-019-HH-2.3-U
     """
     # Extract core fields
     dataname = properties.get("dataname", 0)
