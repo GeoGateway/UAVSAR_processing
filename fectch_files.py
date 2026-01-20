@@ -1,3 +1,11 @@
+"""Fetch and list filenames from ASF UAVSAR data directories.
+
+Usage examples:
+  python fectch_files.py --dataname SanAnd_08517_14004-009_14092-002_0153d_s01_L090_01
+  python fectch_files.py --input datanames.csv
+  python fectch_files.py --input datanames.json
+"""
+
 import argparse
 import csv
 import json
@@ -7,9 +15,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_asf_directory_filenames(url):
-    """
-    Scrapes the ASF directory page to list all available filenames.
-    """
+    """Scrape an ASF directory page and return the filenames found."""
     try:
         # Request the directory page
         response = requests.get(url)
@@ -36,10 +42,12 @@ def get_asf_directory_filenames(url):
         return f"Error: {e}"
 
 def build_asf_url(dataname):
+    """Build the ASF directory URL for a given dataname."""
     return f"https://uavsar.asf.alaska.edu/UA_{dataname}/"
 
 
 def load_datanames_from_csv(path):
+    """Load datanames from the first column of a CSV file."""
     datanames = []
     with open(path, newline="") as csvfile:
         reader = csv.reader(csvfile)
@@ -53,6 +61,7 @@ def load_datanames_from_csv(path):
 
 
 def load_datanames_from_json(path):
+    """Load datanames from JSON, supporting list/dict with a dataname field."""
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
@@ -71,6 +80,7 @@ def load_datanames_from_json(path):
 
 
 def resolve_datanames(args):
+    """Resolve datanames from CLI args, supporting direct or file input."""
     if args.dataname:
         return [args.dataname.strip()]
 
@@ -84,6 +94,7 @@ def resolve_datanames(args):
 
 
 def main():
+    """Parse CLI arguments and list filenames for each dataname."""
     parser = argparse.ArgumentParser(
         description="List filenames from an ASF UAVSAR directory."
     )
