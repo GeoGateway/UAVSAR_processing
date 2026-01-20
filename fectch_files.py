@@ -1,5 +1,17 @@
 """Fetch and list filenames from ASF UAVSAR data directories.
 
+This script scrapes the ASF UAVSAR data directory pages to list the files
+available for a given UAVSAR dataname. It can take a single dataname or a
+file (CSV or JSON) containing multiple datanames.
+
+Args:
+    --dataname: A single UAVSAR data name string.
+        (e.g., SanAnd_08517_14004-009_14092-002_0153d_s01_L090_01)
+    --input: Path to a CSV or JSON file containing datanames.
+        For CSV files, the datanames are expected in the first column.
+        For JSON files, the file should contain a list of objects, each with
+        a "dataname" field, or a single object with a "dataname" field.
+
 Usage examples:
   python fectch_files.py --dataname SanAnd_08517_14004-009_14092-002_0153d_s01_L090_01
   python fectch_files.py --input datanames.csv
